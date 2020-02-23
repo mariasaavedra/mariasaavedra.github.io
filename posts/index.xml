@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Maria Saavedra - Creative Technologist</title>
+    <link>http://example.org/posts/</link>
+    <description>Recent content in Posts on Maria Saavedra - Creative Technologist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Feb 2020 16:03:26 -0600</lastBuildDate>
+    
+	<atom:link href="http://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Recommended Literature</title>
+      <link>http://example.org/posts/recommended-literature/</link>
+      <pubDate>Sun, 23 Feb 2020 16:03:26 -0600</pubDate>
+      
+      <guid>http://example.org/posts/recommended-literature/</guid>
+      <description>An ever growing list of my favorite books and short stories.</description>
+    </item>
+    
+    <item>
+      <title>Wheatpaste for Good</title>
+      <link>http://example.org/posts/wheatpaste-for-good/</link>
+      <pubDate>Sun, 23 Feb 2020 16:02:57 -0600</pubDate>
+      
+      <guid>http://example.org/posts/wheatpaste-for-good/</guid>
+      <description>Wheatpasting is a direct action technique for getting your message across to neighbors or high foot-traffic areas.</description>
+    </item>
+    
+    <item>
+      <title>My Personal Linklog</title>
+      <link>http://example.org/posts/my-personal-linklog/</link>
+      <pubDate>Sun, 23 Feb 2020 16:02:35 -0600</pubDate>
+      
+      <guid>http://example.org/posts/my-personal-linklog/</guid>
+      <description>This is a linked list of resources I have found helpful or lastingly interesting over the years.</description>
+    </item>
+    
+  </channel>
+</rss>
