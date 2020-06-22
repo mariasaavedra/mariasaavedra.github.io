@@ -6,10 +6,19 @@
     <description>Recent content on Maria Saavedra - Creative Technologist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2020 16:25:28 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2020 10:32:05 -0500</lastBuildDate>
     
 	<atom:link href="http://msaavedra.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introduction to Web Development</title>
+      <link>http://msaavedra.com/posts/introduction-to-web-development/</link>
+      <pubDate>Mon, 22 Jun 2020 10:32:05 -0500</pubDate>
+      
+      <guid>http://msaavedra.com/posts/introduction-to-web-development/</guid>
+      <description>A quick introduction to web development</description>
+    </item>
     
     <item>
       <title>Urban Exploring During COVID-19</title>
