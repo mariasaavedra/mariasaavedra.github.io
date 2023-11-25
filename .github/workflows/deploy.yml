@@ -51,7 +51,6 @@ jobs:
           fetch-depth: 0
       - name: Initialize and Update Hugo Modules
         run: |
-          hugo mod init github.com/mariasaavedra/mariasaavedra.github.io
           hugo mod get -u ./...
           # Add the Archie theme as a Hugo module
           hugo mod get github.com/athul/archie
