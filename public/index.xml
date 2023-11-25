@@ -1,29 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>MS</title>
-    <link>https://msaavedra.com/</link>
-    <description>Recent content on MS</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>© Maria Saavedra</copyright>
-    <lastBuildDate>Sat, 25 Nov 2023 01:41:06 -0600</lastBuildDate>
-    <atom:link href="https://msaavedra.com/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Maria Saavedra: Software Engineer, CTO, and Entrepreneur</title>
-      <link>https://msaavedra.com/about/</link>
-      <pubDate>Sat, 25 Nov 2023 15:17:10 -0600</pubDate>
-      <guid>https://msaavedra.com/about/</guid>
-      <description>Maria Saavedra demonstrated an early affinity for the intricate workings of technology. This interest was kindled by observing her father skillfully repair electronic devices, which cultivated in Maria a deep fascination with circuit boards, perceived by her as microcosms of cities.
-Early Ventures into Technology By the age of 8, Maria had ventured into developing video games. After high school, she commenced with a technology internship, where she adeptly managed Linux servers on repurposed computers.</description>
-    </item>
-    <item>
-      <title>Navigating Authentication in Safari with Auth0</title>
-      <link>https://msaavedra.com/posts/auth0-safari-webkit-issue/</link>
-      <pubDate>Sat, 25 Nov 2023 01:41:06 -0600</pubDate>
-      <guid>https://msaavedra.com/posts/auth0-safari-webkit-issue/</guid>
-      <description>The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
-The problem wasn&amp;rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser.</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MS</title><link>https://msaavedra.com/</link><description>Recent content on MS</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Maria Saavedra</copyright><lastBuildDate>Sat, 25 Nov 2023 01:41:06 -0600</lastBuildDate><atom:link href="https://msaavedra.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Maria Saavedra: Software Engineer, CTO, and Entrepreneur</title><link>https://msaavedra.com/about/</link><pubDate>Sat, 25 Nov 2023 15:17:10 -0600</pubDate><guid>https://msaavedra.com/about/</guid><description>Maria Saavedra demonstrated an early affinity for the intricate workings of technology. This interest was kindled by observing her father skillfully repair electronic devices, which cultivated in Maria a deep fascination with circuit boards, perceived by her as microcosms of cities.
+Early Ventures into Technology By the age of 8, Maria had ventured into developing video games. After high school, she commenced with a technology internship, where she adeptly managed Linux servers on repurposed computers.</description></item><item><title>Navigating Authentication in Safari with Auth0</title><link>https://msaavedra.com/posts/auth0-safari-webkit-issue/</link><pubDate>Sat, 25 Nov 2023 01:41:06 -0600</pubDate><guid>https://msaavedra.com/posts/auth0-safari-webkit-issue/</guid><description>The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+The problem wasn&amp;rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser.</description></item></channel></rss>
