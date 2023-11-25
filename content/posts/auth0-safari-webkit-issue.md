@@ -29,6 +29,9 @@ After weighing both options, I opted for Auth0's custom domain feature. This sol
 
 Implementing the custom domain was straightforward. The impact was immediate and authentication became consistent and reliable across all browsers.
 
+## Other Implications:
+Apple's robust security features, while beneficial for users, can pose nuanced challenges for developers. Beyond the protection against cross-site cookies, I observed that Safari automatically terminates WebSocket and SSE connections if they remain inactive for approximately 60 seconds. These connections don't even a close event but simply hang. We were in the process of implementing a real-time chat feature using Server-Sent Events (SSE). We simply implemented a heartbeat mechanism to ensure the connection stayed alive. 
+
 ## Reflections
 
-This experience highlighted the importance of understanding browser-specific behaviors, particularly when dealing with security and authentication. Emulating devices via Developer Tools is a useful tool for testing, but it is not a substitute for real-world testing, had we tested our application on an actual iOS device, we would have caught this issue much earlier in the development process.
+While all these solutions were simple, and much more secure, it wasn't immediately evident that this was the root of the issue thus consuming more time than expected. This experience highlighted the importance of understanding browser-specific behaviors, particularly when dealing with security and authentication. Emulating devices via Developer Tools is a useful tool for testing, but it is not a substitute for real-world testing, had we tested our application on an actual iOS device, we would have caught this issue much earlier in the development process.
