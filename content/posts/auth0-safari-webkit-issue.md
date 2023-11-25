@@ -6,7 +6,7 @@ draft = false
 
 ## Introduction
 
-I recently came a cross a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
 
 ### The Problem: Inconsistent Authentication
 
@@ -26,7 +26,7 @@ I was surprised I hadn't learned this sooner. Apparently, Apple is considering d
 
 ## The Solution:
 
-Faced with this challenge, two solutions presented themselves: restructuring our session management to be server-side or adopting Auth0's custom domain feature. 
+Faced with this challenge, two solutions presented themselves: restructuring our session management to be server-side or adopting Auth0's custom domain feature. P.S I would not recommend saving session data in local storage, as this is a security risk.
 
 ### Choosing the Custom Domain
 
