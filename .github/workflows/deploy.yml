@@ -34,10 +34,6 @@ jobs:
     env:
       HUGO_VERSION: 0.120.2
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.15
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
@@ -49,12 +45,6 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Initialize and Update Hugo Modules
-        run: |
-          hugo mod clean
-          hugo mod get -u ./...
-          # Add the Archie theme as a Hugo module
-          hugo mod get github.com/athul/archie
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
@@ -86,4 +76,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-        
