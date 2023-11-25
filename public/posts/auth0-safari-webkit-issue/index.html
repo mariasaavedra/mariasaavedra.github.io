@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html><head lang="en">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Navigating Authentication in Safari with Auth0 - Maria Saavedra</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="Navigating Authentication in Safari with Auth0" />
+<meta property="og:description" content="The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mariasaavedra.github.io/posts/auth0-safari-webkit-issue/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-25T01:41:06-06:00" />
+<meta property="article:modified_time" content="2023-11-25T01:41:06-06:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Navigating Authentication in Safari with Auth0"/>
+<meta name="twitter:description" content="The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser."/>
+
+	
+        <link href="https://mariasaavedra.github.io/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://mariasaavedra.github.io/css/main.ac08a4c9714baa859217f92f051deb58df2938ec352b506df655005dcaf98cc0.css" />
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://mariasaavedra.github.io">Maria Saavedra</a>
+	</div>
+	<nav>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Navigating Authentication in Safari with Auth0</h1>
+			<div class="meta">Posted on Nov 25, 2023</div>
+		</div>
+		
+
+		<section class="body">
+			<h2 id="the-problem">The Problem:</h2>
+<p>I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.</p>
+<p>The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser. However, when I tested on my Safari desktop browser, authentication also didn&rsquo;t work. This was a critical clue that lead me to the solution.</p>
+<h3 id="understanding-safaris-intelligent-tracking-prevention--ios-webkit">Understanding Safari&rsquo;s Intelligent Tracking Prevention &amp; iOS Webkit</h3>
+<p>My first hunch to take a look at the privacy settings. This lead me to understanding a critical feature of  Safari - Intelligent Tracking Prevention (ITP). Recent versions of Safari have introduced ITP as a default feature; a privacy feature that blocks third-party cookies. This feature is enabled by default on all Safari browsers. It appears this feature was introduced to all browsers in in 2020, as reported by <a href="hhttps://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/">Apple</a>.</p>
+<p>For more information on how to access Safari&rsquo;s Preferences, you can refer to the <a href="https://support.apple.com/lv-lv/guide/safari/sfri40732/mac">official Apple support guide</a>.</p>
+<p>After disabling this option, Auth0 authentication worked as expected on Safari. Voila! The revelation was clear: Safari&rsquo;s ITP was blocking the cookies essential for Auth0&rsquo;s session management.</p>
+<p>But why was it affecting Chrome on mobile, but not on Desktop? The discovery was twofold: not only was Safari&rsquo;s ITP blocking essential cookies for Auth0&rsquo;s session management, but another quirk compounded the issue. All browsers on iOS, regardless of the brand, utilize the Webkit engine—this includes Chrome and Firefox on iOS. This means that the ITP settings affect all these browsers, not just Safari.</p>
+<p>I was surprised I hadn&rsquo;t learned this sooner. Apparently, Apple is considering dropping this requirement, as reported by <a href="https://9to5mac.com/2023/02/07/new-iphone-browsers/">9to5Mac</a>.</p>
+<h2 id="the-solution">The Solution:</h2>
+<p>Faced with this challenge, two solutions presented themselves: restructuring our session management to be server-side or adopting Auth0&rsquo;s custom domain feature. P.S I would not recommend saving session data in local storage, as this is a security risk.</p>
+<p>After weighing both options, I opted for Auth0&rsquo;s custom domain feature. This solution, although accompanied by a $23/month cost, was an instant resolution.</p>
+<p>Implementing the custom domain was straightforward. The impact was immediate and authentication became consistent and reliable across all browsers.</p>
+<h2 id="reflections">Reflections</h2>
+<p>This experience highlighted the importance of understanding browser-specific behaviors, particularly when dealing with security and authentication. Emulating devices via Developer Tools is a useful tool for testing, but it is not a substitute for real-world testing, had we tested our application on an actual iOS device, we would have caught this issue much earlier in the development process.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2023  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+
+
+</div>
+    </body>
+</html>

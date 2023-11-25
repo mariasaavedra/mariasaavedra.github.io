@@ -26,7 +26,7 @@ A step-by-step series of examples that tell you how to get a development environ
 2. **Run the Hugo Server:**
     ```bash
     hugo server -D
-    ``
+    ```
     
 3. **Open the Local Instance:**
     Open your browser and go to `http://localhost:1313/`.
