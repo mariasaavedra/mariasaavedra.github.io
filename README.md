@@ -21,10 +21,17 @@ A step-by-step series of examples that tell you how to get a development environ
    ```bash
    git clone https://github.com/mariasaavedra/mariasaavedra.github.io.git
    cd mariasaavedra.github.io
+    ```
 
 2. **Run the Hugo Server:**
     ```bash
     hugo server -D
+    ``
     
 3. **Open the Local Instance:**
     Open your browser and go to `http://localhost:1313/`.
+
+4. **Create a New Post:**
+    ```bash
+    hugo new posts/<post-name>.md    
+    ```
