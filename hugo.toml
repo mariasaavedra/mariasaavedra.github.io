@@ -1,0 +1,5 @@
+baseURL = 'https://msaavedra/'
+languageCode = 'en-us'
+title = 'Maria Saavedra'
+theme = "github.com/athul/archie"
+
