@@ -4,11 +4,8 @@ date = 2023-11-25T01:41:06-06:00
 draft = false
 +++
 
-## Introduction
-
+## The Problem:
 I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
-
-### The Problem: Inconsistent Authentication
 
 The problem wasn't clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser. However, when I tested on my Safari desktop browser, authentication also didn't work. This was a critical clue that lead me to the solution.
 
@@ -27,8 +24,6 @@ I was surprised I hadn't learned this sooner. Apparently, Apple is considering d
 ## The Solution:
 
 Faced with this challenge, two solutions presented themselves: restructuring our session management to be server-side or adopting Auth0's custom domain feature. P.S I would not recommend saving session data in local storage, as this is a security risk.
-
-### Choosing the Custom Domain
 
 After weighing both options, I opted for Auth0's custom domain feature. This solution, although accompanied by a $23/month cost, was an instant resolution.
 
