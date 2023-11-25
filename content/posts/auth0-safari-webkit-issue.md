@@ -9,7 +9,7 @@ I recently came across a time-consuming bug on a new application. The issue, aut
 
 The problem wasn't clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser. However, when I tested on my Safari desktop browser, authentication also didn't work. This was a critical clue that lead me to the solution.
 
-### Understanding Safari's Intelligent Tracking Prevention & iOS Webkit
+### Understanding Intelligent Tracking Prevention (ITP)
 
 My first hunch to take a look at the privacy settings. This lead me to understanding a critical feature of  Safari - Intelligent Tracking Prevention (ITP). Recent versions of Safari have introduced ITP as a default feature; a privacy feature that blocks third-party cookies. This feature is enabled by default on all Safari browsers. It appears this feature was introduced to all browsers in in 2020, as reported by [Apple](hhttps://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/).
 

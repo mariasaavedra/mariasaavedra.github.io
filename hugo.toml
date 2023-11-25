@@ -1,5 +1,40 @@
 baseURL = 'https://mariasaavedra.github.io'
 languageCode = 'en-us'
 title = 'Maria Saavedra'
+copyright = "© Maria Saavedra"
 theme = "github.com/athul/archie"
 
+
+# Social Tags
+
+[[params.social]]
+name = "GitHub"
+icon = "github"
+url = "https://github.com/mariasaavedra"
+
+[[params.social]]
+name = "Twitter"
+icon = "twitter"
+url = "https://twitter.com/Maria_Saavedra"
+
+[[params.social]]
+name = "LinkedIn"
+icon = "linkedin"
+url = "https://www.linkedin.com/in/msaav/"
+
+# Main menu Items
+
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 3
