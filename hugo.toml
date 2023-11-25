@@ -3,6 +3,10 @@ languageCode = 'en-us'
 title = 'MS'
 copyright = "© Maria Saavedra"
 theme="archie"
+[module]
+  [[module.imports]]
+  path = 'github.com/athul/archie'
+  
 paginate=3 # articles per page
 
 # Social Tags
