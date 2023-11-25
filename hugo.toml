@@ -2,7 +2,7 @@ baseURL = 'https://msaavedra.com/'
 languageCode = 'en-us'
 title = 'MS'
 copyright = "© Maria Saavedra"
-theme = "archie"
+theme = "github.com/athul/archie"
   
 paginate=3 # articles per page
 
