@@ -4,6 +4,10 @@ date = 2023-11-25T01:41:06-06:00
 draft = false
 +++
 
+
+![Privacy](/images/1.webp)
+
+
 ## The Problem:
 I recently came across a time-consuming bug on a fresh application build. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
 
