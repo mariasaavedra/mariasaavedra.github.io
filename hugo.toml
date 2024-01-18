@@ -6,7 +6,7 @@ theme = "github.com/athul/archie"
 paginate=3 # articles per page
 
 [params]
-    subtitle = "Sporadic thoughts and insights"
+    subtitle = "thoughts and insights"
 	mode="toggle" # color-mode → light,dark,toggle or auto
 	mathjax = true # enable MathJax support
 	katex = true # enable KaTeX support
