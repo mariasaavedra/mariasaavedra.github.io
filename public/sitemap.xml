@@ -2,20 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://msaavedra.com/about/</loc>
+    <loc>https://mariasaavedra.github.io/posts/bun-is-amazing/</loc>
+    <lastmod>2024-01-17T01:45:35-06:00</lastmod>
+  </url><url>
+    <loc>https://mariasaavedra.github.io/</loc>
+    <lastmod>2024-01-17T01:45:35-06:00</lastmod>
+  </url><url>
+    <loc>https://mariasaavedra.github.io/posts/</loc>
+    <lastmod>2024-01-17T01:45:35-06:00</lastmod>
+  </url><url>
+    <loc>https://mariasaavedra.github.io/about/</loc>
     <lastmod>2023-11-25T15:17:10-06:00</lastmod>
   </url><url>
-    <loc>https://msaavedra.com/</loc>
+    <loc>https://mariasaavedra.github.io/projects/</loc>
+    <lastmod>2023-11-25T15:17:10-06:00</lastmod>
+  </url><url>
+    <loc>https://mariasaavedra.github.io/posts/auth0-safari-webkit-issue/</loc>
     <lastmod>2023-11-25T01:41:06-06:00</lastmod>
   </url><url>
-    <loc>https://msaavedra.com/posts/auth0-safari-webkit-issue/</loc>
-    <lastmod>2023-11-25T01:41:06-06:00</lastmod>
+    <loc>https://mariasaavedra.github.io/categories/</loc>
   </url><url>
-    <loc>https://msaavedra.com/posts/</loc>
-    <lastmod>2023-11-25T01:41:06-06:00</lastmod>
-  </url><url>
-    <loc>https://msaavedra.com/categories/</loc>
-  </url><url>
-    <loc>https://msaavedra.com/tags/</loc>
+    <loc>https://mariasaavedra.github.io/tags/</loc>
   </url>
 </urlset>

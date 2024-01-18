@@ -1,35 +1,72 @@
 <!DOCTYPE html>
 <html><head lang="en">
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Navigating Authentication in Safari with Auth0 - MS</title><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Authentication Issues in Safari and iOS Browsers - M. Saavedra</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="The Problem: I recently came across a time-consuming bug on a fresh application build. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
 The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser." />
 	<meta property="og:image" content=""/>
-	<meta property="og:title" content="Navigating Authentication in Safari with Auth0" />
-<meta property="og:description" content="The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+	<meta property="og:title" content="Authentication Issues in Safari and iOS Browsers" />
+<meta property="og:description" content="The Problem: I recently came across a time-consuming bug on a fresh application build. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
 The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://msaavedra.com/posts/auth0-safari-webkit-issue/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://mariasaavedra.github.io/posts/auth0-safari-webkit-issue/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-11-25T01:41:06-06:00" />
 <meta property="article:modified_time" content="2023-11-25T01:41:06-06:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Navigating Authentication in Safari with Auth0"/>
-<meta name="twitter:description" content="The Problem: I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
+<meta name="twitter:title" content="Authentication Issues in Safari and iOS Browsers"/>
+<meta name="twitter:description" content="The Problem: I recently came across a time-consuming bug on a fresh application build. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.
 The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser."/>
-<script src="https://msaavedra.comjs/feather.min.js"></script>
+<script src="https://mariasaavedra.github.io/js/feather.min.js"></script>
 	
 	
-        <link href="https://msaavedra.com/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
-	
-
-	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://msaavedra.com/css/main.ac08a4c9714baa859217f92f051deb58df2938ec352b506df655005dcaf98cc0.css" />
-
-	
+        <link href="https://mariasaavedra.github.io/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
 	
 
 	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://mariasaavedra.github.io/css/main.ac08a4c9714baa859217f92f051deb58df2938ec352b506df655005dcaf98cc0.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://mariasaavedra.github.io/css/dark.726cd11ca6eb7c4f7d48eb420354f814e5c1b94281aaf8fd0511c1319f7f78a4.css"  disabled />
+	
+
+	
+	
+		<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		</script>
+	
+		
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				displayMath: [['$$','$$'], ['\[','\]']],
+				processEscapes: true,
+				processEnvironments: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+				TeX: { equationNumbers: { autoNumber: "AMS" },
+						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
+			}
+		});
+		</script>
+	
+
+	
+	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+		
+		
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					renderMathInElement(document.body, {
+							delimiters: [
+									{left: "$$", right: "$$", display: true},
+									{left: "$", right: "$", display: false}
+							]
+					});
+			});
+			</script>
 	
 	
 	
@@ -37,16 +74,20 @@ The problem wasn&rsquo;t clear to me at first: Authentication, which performed a
 <body>
         <div class="content"><header>
 	<div class="main">
-		<a href="https://msaavedra.com">MS</a>
+		<a href="https://mariasaavedra.github.io/">M. Saavedra</a>
 	</div>
 	<nav>
 		
 		<a href="/">Home</a>
 		
-		<a href="/posts">All posts</a>
+		<a href="/posts">Articles</a>
 		
 		<a href="/about">About</a>
 		
+		<a href="/projects">Projects</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="https://mariasaavedra.github.io/js/themetoggle.js"></script>
 		
 	</nav>
 </header>
@@ -54,17 +95,18 @@ The problem wasn&rsquo;t clear to me at first: Authentication, which performed a
 <main>
 	<article>
 		<div class="title">
-			<h1 class="title">Navigating Authentication in Safari with Auth0</h1>
+			<h1 class="title">Authentication Issues in Safari and iOS Browsers</h1>
 			<div class="meta">Posted on Nov 25, 2023</div>
 		</div>
 		
 
 		<section class="body">
-			<h2 id="the-problem">The Problem:</h2>
-<p>I recently came across a time-consuming bug on a new application. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.</p>
+			<p><img src="/images/1.webp" alt="Privacy"></p>
+<h2 id="the-problem">The Problem:</h2>
+<p>I recently came across a time-consuming bug on a fresh application build. The issue, authentication operated perfectly on Chrome (Desktop), yet authentication was completely broken on Chrome/iOS. This issue was compounded by the fact that the issue was not limited to Chrome, but also affected Firefox and Safari on iOS.</p>
 <p>The problem wasn&rsquo;t clear to me at first: Authentication, which performed as expected in Chrome on desktop environments was not working on iOS at all in any browser. However, when I tested on my Safari desktop browser, authentication also didn&rsquo;t work. This was a critical clue that lead me to the solution.</p>
 <h3 id="understanding-intelligent-tracking-prevention-itp">Understanding Intelligent Tracking Prevention (ITP)</h3>
-<p>My first hunch to take a look at the privacy settings. This lead me to understanding a critical feature of  Safari - Intelligent Tracking Prevention (ITP). Recent versions of Safari have introduced ITP as a default feature; a privacy feature that blocks third-party cookies. This feature is enabled by default on all Safari browsers. It appears this feature was introduced to all browsers in in 2020, as reported by <a href="hhttps://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/">Apple</a>.</p>
+<p>My first hunch to take a look at the privacy settings. This lead me to understanding a critical feature of Safari - Intelligent Tracking Prevention (ITP). Recent versions of Safari have introduced ITP as a default feature; a privacy feature that blocks third-party cookies. This feature is enabled by default on all Safari browsers. It appears this feature was introduced to all browsers in in 2020, as reported by <a href="hhttps://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/">Apple</a>.</p>
 <p>For more information on how to access Safari&rsquo;s Preferences, you can refer to the <a href="https://support.apple.com/lv-lv/guide/safari/sfri40732/mac">official Apple support guide</a>.</p>
 <p>After disabling this option, Auth0 authentication worked as expected on Safari. Voila! The revelation was clear: Safari&rsquo;s ITP was blocking the cookies essential for Auth0&rsquo;s session management.</p>
 <p>But why was it affecting Chrome on mobile, but not on Desktop? The discovery was twofold: not only was Safari&rsquo;s ITP blocking essential cookies for Auth0&rsquo;s session management, but another quirk compounded the issue. All browsers on iOS, regardless of the brand, utilize the Webkit engine—this includes Chrome and Firefox on iOS. This means that the ITP settings affect all these browsers, not just Safari.</p>
@@ -73,8 +115,10 @@ The problem wasn&rsquo;t clear to me at first: Authentication, which performed a
 <p>Faced with this challenge, two solutions presented themselves: restructuring our session management to be server-side or adopting Auth0&rsquo;s custom domain feature. P.S I would not recommend saving session data in local storage, as this is a security risk.</p>
 <p>After weighing both options, I opted for Auth0&rsquo;s custom domain feature. This solution, although accompanied by a $23/month cost, was an instant resolution.</p>
 <p>Implementing the custom domain was straightforward. The impact was immediate and authentication became consistent and reliable across all browsers.</p>
+<h2 id="other-implications">Other Implications:</h2>
+<p>Apple&rsquo;s robust security features, while beneficial for users, can pose nuanced challenges for developers. Beyond the protection against cross-site cookies, I observed that Safari automatically terminates WebSocket and SSE connections if they remain inactive for approximately 60 seconds. These connections don&rsquo;t even a close event but simply hang. We were in the process of implementing a real-time chat feature using Server-Sent Events (SSE). We simply implemented a heartbeat mechanism to ensure the connection stayed alive.</p>
 <h2 id="reflections">Reflections</h2>
-<p>This experience highlighted the importance of understanding browser-specific behaviors, particularly when dealing with security and authentication. Emulating devices via Developer Tools is a useful tool for testing, but it is not a substitute for real-world testing, had we tested our application on an actual iOS device, we would have caught this issue much earlier in the development process.</p>
+<p>While all these solutions were simple, and much more secure, it wasn&rsquo;t immediately evident that this was the root of the issue thus consuming more time than expected. This experience highlighted the importance of understanding browser-specific behaviors, particularly when dealing with security and authentication. Emulating devices via Developer Tools is a useful tool for testing, but it is not a substitute for real-world testing, had we tested our application on an actual iOS device, we would have caught this issue much earlier in the development process.</p>
 
 		</section>
 
@@ -91,7 +135,7 @@ The problem wasn&rsquo;t clear to me at first: Authentication, which performed a
     <a class="border"></a><a class="soc" href="https://www.linkedin.com/in/msaav/" rel="me" title="LinkedIn"><i data-feather="linkedin"></i></a>
     <a class="border"></a></div>
   <div class="footer-info">
-    2023  © Maria Saavedra |  <a
+    2024  © Maria Saavedra |  <a
       href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
   </div>
 </footer>

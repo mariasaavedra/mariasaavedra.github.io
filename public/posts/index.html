@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html><head lang="en">
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Posts - MS</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Posts - M. Saavedra</title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta property="og:image" content=""/>
-	<link rel="alternate" type="application/rss+xml" href="https://msaavedra.com/posts/index.xml" title="MS" />
+	<link rel="alternate" type="application/rss+xml" href="https://mariasaavedra.github.io/posts/index.xml" title="M. Saavedra" />
 	<meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://msaavedra.com/posts/" />
+<meta property="og:url" content="https://mariasaavedra.github.io/posts/" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
-<script src="https://msaavedra.comjs/feather.min.js"></script>
+<script src="https://mariasaavedra.github.io/js/feather.min.js"></script>
 	
 	
-        <link href="https://msaavedra.com/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
-	
-
-	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://msaavedra.com/css/main.ac08a4c9714baa859217f92f051deb58df2938ec352b506df655005dcaf98cc0.css" />
-
-	
+        <link href="https://mariasaavedra.github.io/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
 	
 
 	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://mariasaavedra.github.io/css/main.ac08a4c9714baa859217f92f051deb58df2938ec352b506df655005dcaf98cc0.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://mariasaavedra.github.io/css/dark.726cd11ca6eb7c4f7d48eb420354f814e5c1b94281aaf8fd0511c1319f7f78a4.css"  disabled />
+	
+
+	
+	
+		<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		</script>
+	
+		
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				displayMath: [['$$','$$'], ['\[','\]']],
+				processEscapes: true,
+				processEnvironments: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+				TeX: { equationNumbers: { autoNumber: "AMS" },
+						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
+			}
+		});
+		</script>
+	
+
+	
+	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+		
+		
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					renderMathInElement(document.body, {
+							delimiters: [
+									{left: "$$", right: "$$", display: true},
+									{left: "$", right: "$", display: false}
+							]
+					});
+			});
+			</script>
 	
 	
 	
@@ -33,16 +70,20 @@
 <body>
         <div class="content"><header>
 	<div class="main">
-		<a href="https://msaavedra.com">MS</a>
+		<a href="https://mariasaavedra.github.io/">M. Saavedra</a>
 	</div>
 	<nav>
 		
 		<a href="/">Home</a>
 		
-		<a href="/posts">All posts</a>
+		<a href="/posts">Articles</a>
 		
 		<a href="/about">About</a>
 		
+		<a href="/projects">Projects</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="https://mariasaavedra.github.io/js/themetoggle.js"></script>
 		
 	</nav>
 </header>
@@ -52,7 +93,9 @@
 
 
 <ul class="posts"><li class="post">
-			<a href="/posts/auth0-safari-webkit-issue/">Navigating Authentication in Safari with Auth0</a> <span class="meta">Nov 25, 2023</span>
+			<a href="/posts/bun-is-amazing/">Bun Is (Really) Fast</a> <span class="meta">Jan 17, 2024</span>
+		</li><li class="post">
+			<a href="/posts/auth0-safari-webkit-issue/">Authentication Issues in Safari and iOS Browsers</a> <span class="meta">Nov 25, 2023</span>
 		</li></ul>
 <footer>
   <div style="display:flex"><a class="soc" href="https://github.com/mariasaavedra" rel="me" title="GitHub"><i data-feather="github"></i></a>
@@ -60,7 +103,7 @@
     <a class="border"></a><a class="soc" href="https://www.linkedin.com/in/msaav/" rel="me" title="LinkedIn"><i data-feather="linkedin"></i></a>
     <a class="border"></a></div>
   <div class="footer-info">
-    2023  © Maria Saavedra |  <a
+    2024  © Maria Saavedra |  <a
       href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
   </div>
 </footer>
