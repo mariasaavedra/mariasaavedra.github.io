@@ -1,7 +1,7 @@
 +++
 title = 'Creating a Desktop App With Rust and React'
 date = 2024-02-06T13:13:29-06:00
-draft = true
+draft = false
 +++
 
 We're going to leverage Tauri to create a desktop app with Rust and React. Tauri is a toolkit that allows you to build desktop apps with web technologies. It's a great way to leverage your existing web development skills to create desktop apps.
