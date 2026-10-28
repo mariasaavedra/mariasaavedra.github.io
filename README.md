@@ -16,6 +16,7 @@ Personal blog, built with [Eleventy](https://www.11ty.dev/) (v3, ESM) using [MDX
 eleventy.config.js     Eleventy config: MDX extension, posts collection, dirs
 src/
   index.mdx            Home page, lists all posts
+  css/style.css        Site styles (copied to _site/css as-is)
   posts/               One .mdx file per article
     posts.json         Directory data: layout, `posts` tag, series name
   _includes/

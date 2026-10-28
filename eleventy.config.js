@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import * as runtime from "react/jsx-runtime";
 
 export default function (eleventyConfig) {
+	eleventyConfig.addPassthroughCopy("src/css");
 	eleventyConfig.addTemplateFormats("mdx");
 
 	eleventyConfig.addCollection("posts", (api) =>

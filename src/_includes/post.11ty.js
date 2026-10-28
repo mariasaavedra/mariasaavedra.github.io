@@ -4,9 +4,9 @@ export const data = {
 
 export default function (data) {
 	return `<article>
-<p>${data.series} · Article ${String(data.order).padStart(2, "0")} · ${data.topic}</p>
+<p class="post-meta">${data.series} · ${data.topic}</p>
 <h1>${data.title}</h1>
-<p><em>${data.subtitle}</em></p>
+<p class="post-subtitle">${data.subtitle}</p>
 ${data.content}
 </article>`;
 }

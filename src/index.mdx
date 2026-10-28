@@ -6,10 +6,11 @@ layout: base.11ty.js
 
 Problems encountered, decisions made, and things learned while building software.
 
-{props.collections.posts.map((post) => (
-  <p key={post.url}>
-    <a href={post.url}>{post.data.title}</a>
-    <br />
-    <em>{post.data.subtitle}</em>
-  </p>
-))}
+<ul className="post-list">
+  {props.collections.posts.map((post) => (
+    <li key={post.url}>
+      <a href={post.url}>{post.data.title}</a>
+      <p>{post.data.subtitle}</p>
+    </li>
+  ))}
+</ul>
