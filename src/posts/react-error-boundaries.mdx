@@ -1,0 +1,51 @@
+---
+title: One broken component shouldn't take down the whole page
+subtitle: How I think about where to put error boundaries.
+topic: Error Handling
+order: 2
+---
+
+I used to think of error boundaries as an error-handling feature. Lately I think of them more as a layout decision: when something throws during render, how much of the screen goes with it?
+
+The usual answer is "all of it". One boundary at the root, and any render error lands you on a generic "Something went wrong" page. That's better than a blank screen, but it's a big blast radius.
+
+I saw a real example of this: typing into a single filter field threw during render, and the whole page fell into the generic error state. One filter broke, and the user lost everything else on the page, including parts that had nothing to do with it.
+
+## Boundaries around features
+
+React's docs put it simply: by default, an error during rendering removes the UI from the screen, and an error boundary lets you show a fallback instead of the part that crashed. So the useful question is how big "the part that crashed" should be.
+
+My rule of thumb is to put boundaries around sections that can work independently: a panel, a feed, a details view. If a section has its own data, its own loading state and its own way to recover, it probably deserves its own boundary. Wrapping every button is overkill. Wrapping the whole app is too coarse.
+
+Picture a dashboard with three panels. If one fails, it shows a local fallback and the other two keep working.
+
+## They pair well with Suspense and React Query
+
+With `useSuspenseQuery`, a component suspends while it waits for data, and if the query fails with no usable cached data, the error goes to the nearest error boundary. So each feature section gets two wrappers with clear jobs:
+
+- Suspense decides what to show while waiting.
+- The error boundary decides what to show if it fails.
+
+The component inside only handles the success case, so there's less conditional rendering in the feature itself.
+
+## Recovery
+
+A fallback shouldn't be a dead end. Users shouldn't have to refresh the whole page because one request failed. TanStack Query has `QueryErrorResetBoundary`, which resets the query error along with the boundary so a retry button actually retries. Resetting just the React boundary isn't enough for a failed suspense query, because the query itself still holds the error.
+
+## What boundaries don't cover
+
+They catch errors thrown while rendering. They don't catch errors in event handlers, arbitrary async code, or server-side rendering. And plenty of failures shouldn't become render errors at all:
+
+- Form validation errors are normal behavior.
+- A failed mutation usually wants an inline message or a toast.
+- An empty result isn't an error.
+
+Also, a failed background refetch with cached data still shows the cached data and doesn't throw into a boundary. That's usually what you want, but it's worth knowing so you don't expect the fallback to show up every time a request fails.
+
+## Fallbacks
+
+Keep the fallback the size of the failure. A small panel gets a small message and a retry button, something like "Unable to load this section". A bigger failure can get a bigger recovery screen. And log the error. A friendly fallback is for the user, the log is for you, and you need both.
+
+## Where I landed
+
+I don't put a boundary on every component. But I think about them while designing the page, because they shape how components are grouped and how much of the UI survives a failure. The rule I keep coming back to is to load and fail at the smallest meaningful feature boundary.

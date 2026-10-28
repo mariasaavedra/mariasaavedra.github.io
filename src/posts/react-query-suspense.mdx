@@ -1,0 +1,72 @@
+---
+title: Using Suspense for dependent queries (and when not to)
+subtitle: What useSuspenseQuery cleans up, what it doesn't fix, and how I'd roll it out.
+topic: Asynchronous Data
+order: 3
+---
+
+I like TanStack Query. It handles caching, deduping, refetching and invalidation so I don't have to. Where I keep getting annoyed is when one request depends on another and the first result decides what the second should be.
+
+I recently wrote an internal proposal about this. This is the version without the internal details.
+
+## The problem
+
+The flow looks like this: query A, pull out a value (say an ID), query B, render.
+
+With `useQuery` that means fetching the first resource, passing the ID to the second query with `enabled`, and checking some mix of pending, error and undefined. `enabled` is the right tool for that, but as the chain grows the component fills up with questions:
+
+- Is the first query still pending?
+- Does the ID exist yet?
+- Has the second query started?
+- Which branch am I in?
+- What if the parent resource changes?
+
+None of them is hard on its own, but together the coordination code can be harder to read than the feature. I started to see it less as a loading-state problem and more as a problem of describing dependencies. The component only makes sense once a resource exists, but its code has to act like it might not.
+
+## What Suspense changes
+
+With `useSuspenseQuery`, the component suspends while it waits, and the nearest Suspense boundary decides what to show. By the time it renders, the data is defined.
+
+That lets me split one big coordinator into smaller components. A parent figures out which branch applies, say linked, possible match, or not found, and renders a child for it. Each child fetches only what it needs. The branching is plain composition instead of query flags.
+
+TypeScript gets nicer too. A child that needs an ID receives one, so I stop writing `| undefined` handling everywhere.
+
+One catch: `useSuspenseQuery` has no `enabled`. If a query shouldn't run yet, you don't render the component that owns it. For branching flows that fits well.
+
+## What it doesn't do
+
+Suspense doesn't make anything faster. Dependent queries still waterfall, so if B needs A you pay for both. Multiple `useSuspenseQuery` calls in one component can also run one after another, which is a regression if the requests are independent.
+
+So:
+
+- Dependent queries: `useSuspenseQuery` plus component composition.
+- Independent queries that need to load together: keep them parallel with `useSuspenseQueries` or prefetch higher up.
+- Simple queries, or ones where the component should stay usable while loading: keep `useQuery`.
+
+And if an API change can remove the dependency, do that instead.
+
+## The bigger point: smaller loading and failure boundaries
+
+What I actually care about most came from watching people use the product in person. Pages were often blocked until every data source resolved, so one slow request held up sections that had nothing to do with it.
+
+The principle I took from that: load and fail at the smallest meaningful feature boundary. Suspense on its own isn't a performance fix, but section-level Suspense plus error boundaries keep unrelated data from blocking or breaking a whole workflow. (I wrote more about the error side in [the error boundaries post](/posts/react-error-boundaries/).)
+
+## Opt-in, not a migration
+
+I pitched this as an option for dependency-heavy flows, not a replacement. `useQuery` stays the default when it's simpler. The convention I proposed:
+
+- Use `useSuspenseQuery` when the component isn't meaningful until the data exists.
+- Use `useQuery` when it should stay visible and interactive while loading, refreshing, conditional, or stale-but-usable.
+- Where it helps, expose `useThing()` and `useThingSuspense()` from the same query definition, so the key, function and cache config aren't duplicated.
+- Put Suspense and error boundaries around feature sections, not whole pages.
+- Treat loading, empty and failed as three different states.
+
+## How I'd validate it
+
+Pick one dependency-heavy feature, ideally one with several dependent queries, `enabled` chains, repeated null checks or manual refetch coordination. Compare before and after on code complexity, loading UX, error isolation, and whether unrelated sections stay usable. No page-wide rewrite and no migration project. If it's clearly better, adopt it as those areas get touched anyway.
+
+One feature already built this way has had fewer fetch-related defects since. I'm not claiming Suspense caused that, since a lot changes over time. I just take it as a sign the approach holds up.
+
+## Where I landed
+
+I still use plain `useQuery` most of the time, and I wouldn't adopt Suspense just to skip an `isPending` check. For dependent, branching flows though, it makes the dependencies easier to read and keeps loading and failure local.

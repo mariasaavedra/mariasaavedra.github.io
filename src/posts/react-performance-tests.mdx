@@ -1,0 +1,78 @@
+---
+title: I made a React search 10x faster by writing perf tests first
+subtitle: A vague "this page is slow" report, a Profiler inside a spec file, and three separate causes.
+topic: React Performance
+order: 1
+---
+
+I got a performance report that was just a list of symptoms: lag on Load More, slow updates when changing sort order, a pause when switching tabs with a few pages loaded, laggy typing in the search box, and a tab that crept up to 1.5–3 GB of memory over a long session. No obvious root cause.
+
+When that happens it's tempting to open DevTools, record something, and start sprinkling `React.memo` and `useCallback` around. Maybe that helps. But I'd be guessing, and I wouldn't know if I'd fixed the thing or just moved it. So I tried to make the problem reproducible first.
+
+## Reproduce it in the browser
+
+In Chrome DevTools I set Network to Fast 4G and CPU to 4× slowdown. Something that feels fine on a dev laptop often doesn't on slower hardware, and that's usually where these reports come from.
+
+Then I went through the interactions from the report: search, filter, sort, switch tabs, load a big dataset. I wasn't looking for the cause yet, just a scenario I could trigger on demand.
+
+## Move it into a spec
+
+I already had Jest and React Testing Library, so I wrapped the page in React's `<Profiler>` inside a dedicated perf spec, next to the normal one (`thing.spec.tsx` and `thing.perf.spec.tsx`). Each test does one interaction (mount, one keystroke, toggle filters, change sort, switch tabs) and records commits, which components rendered, and which props or callbacks changed identity.
+
+I didn't write assertions at first. The spec was just an instrument. The baseline was already revealing:
+
+- Initial mount: 5 commits.
+- One keystroke: 2 commits, and both the list and the filters panel re-rendered.
+- Opening the filters panel re-rendered the list, even though the data hadn't changed.
+
+Now I could change one thing, rerun, and diff the output without clicking around the app. One caveat: Profiler timings in jsdom aren't real browser timings. Render counts, mounts and prop identity are still solid signals, and they're stable between runs.
+
+## Three causes, not one
+
+I recorded typing a short search term into a ~26 row list in the browser Profiler and compared it with the spec output. Three separate things were going on:
+
+1. Every keystroke re-rendered the whole page, because the typed term lived in a parent.
+2. Every keystroke remounted every table cell. The search term was a dependency of the memoized column definitions, so each keystroke made new columns, new cell render functions, and new component identities. React saw different components and remounted them.
+3. Every row that survived the filter re-rendered. A short term still matches most rows, and the table had no row memoization.
+
+They look like one problem ("typing is slow") but each needs its own fix.
+
+## The fixes
+
+I made the smallest change for each cause:
+
+- Moved the typed term and the filter-panel open state into a small external store, so only the components that read them re-render. The page, tabs and filters panel stay quiet while typing.
+- Made the column definitions independent of the search term, so they only change when dates, translations or handlers change.
+- Passed the highlight term to the few cells that need it through a small context instead of through the columns.
+- Added an opt-in `memoizeRows` prop to the table (off by default).
+
+One thing I ran into: I used plain shallow memo on purpose. A memo with a custom comparator crashed the React DevTools profiler when "record why each component rendered" was on, and I didn't want to lose the tool I was using to check my work.
+
+I also didn't start with `useMemo` everywhere. I'm fine with it, but I'd rather ask what changed and why that forces a render than ask what I can memoize. Memoizing one component does nothing if something else keeps invalidating it.
+
+## Results
+
+I reran the same spec against the baseline.
+
+| | Before | After |
+| --- | --- | --- |
+| Page shell while typing | Re-rendered per keystroke | Doesn't re-render |
+| Table cell identities | Recreated on every search update | Stable |
+| Surviving rows | Re-rendered unnecessarily | Skipped via opt-in memoization |
+| Search highlighting | Passed through column definitions | Passed through context |
+| How I diagnose | Mostly manual profiling | Repeatable `.perf.spec.tsx` |
+
+On 150 rows in the jsdom benchmark, the first keystroke went from about 480 ms to 46 ms, and steady state improved by around 92%. Overall that's roughly 10× less render time while searching. Those are jsdom numbers, so I treat them as relative. I also checked the same interaction in the browser with the same throttling, and it was clearly better there too.
+
+## What I'd keep as regression tests
+
+I wouldn't assert an exact commit count. That breaks whenever effects or scheduling legitimately change. I'd assert behavior: typing in search doesn't render the filters panel, and changing the term doesn't remount every cell.
+
+## The short version
+
+1. Reproduce with throttled network and CPU.
+2. Baseline it with a `.perf.spec.tsx` around a `<Profiler>`.
+3. Find one cause, make one change.
+4. Rerun the same spec, then confirm in the browser.
+
+The 10× is nice, but what I'll actually reuse is the process. I still use DevTools to see what the user sees. I use the spec to figure out why.

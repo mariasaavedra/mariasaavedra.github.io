@@ -1,0 +1,58 @@
+---
+title: Building a React booking widget for a site I don't control
+subtitle: I thought I needed an API integration. I needed a URL.
+topic: React Architecture
+order: 4
+---
+
+I wanted to add a small interactive feature to an existing website that's built and hosted on a separate platform. I didn't want to migrate it or stand up a new app for one feature.
+
+The requirement: a visitor clicks an existing "Book Now" button, a sidebar opens, they pick dates and a guest count, and Search sends them to an external booking engine with those choices filled in.
+
+I first treated it as a big integration project.
+
+## I went straight to APIs
+
+"Booking integration" made me think about auth, credentials, availability queries, rates, and probably a backend to tie it together. Some booking experiences do need all that.
+
+But when I pinned down what this one actually does, none of it applied. We aren't showing live availability, taking payments or creating reservations. We collect search parameters and hand the user to a booking engine that already handles the hard parts. If that engine accepts those parameters in a URL, the widget just builds the URL and navigates. No authenticated API.
+
+## Why still React
+
+The host site isn't React, but the widget can be. A date picker, guest controls, validation and a sidebar transition are all things I'd rather build in React than wire up with DOM listeners. Rebuilding the site in Next.js for this would be silly, so I treat React as something I embed instead of something that owns the page.
+
+The contract is small. The host page loads a JS bundle, the bundle mounts the widget into a container, an existing button opens it, and the widget gets a bit of config like the booking destination.
+
+Embedding makes you think about ownership more than a normal React app does. Who owns the button? Who owns the open state? What if the init script runs twice? What if the host re-renders part of its DOM? How does the widget clean up? React usually owns the whole root. Here it's a guest on someone else's page.
+
+## Shipping it with Cloudflare
+
+I'm looking at Cloudflare Workers to serve the bundle separately from the host platform. Build the React app into a standalone browser bundle, deploy the assets, and the host just references a script. That gives the widget its own deploy cycle, so I can ship changes without rebuilding the original site.
+
+Workers can serve static assets, so a simple widget doesn't need a Node server. The React code still runs in the visitor's browser. Cloudflare just serves it, with Worker logic available later if I need it. I don't see a reason to add server logic yet.
+
+## CSS isolation
+
+You don't control the host's CSS. It might have global rules for buttons, inputs or headings, and your widget shouldn't be affected by them (or affect them). Shadow DOM is a reasonable way to get that boundary, but it isn't free. You still have to deal with font inheritance, focus management, and portals. A dialog that portals into `document.body` ends up outside the shadow root and loses your styles. And Shadow DOM doesn't isolate JavaScript globals.
+
+## The booking flow
+
+Click Book Now, the sidebar opens, pick check-in, check-out and guests, validate, and on Search build the URL and open it in a new tab. The booking engine takes it from there.
+
+Details worth getting right:
+
+- Format dates consistently.
+- Check-out has to be after check-in.
+- Put sensible limits on guest counts.
+- Open the tab directly from the click so popup blockers don't interfere.
+- Match the provider's real URL parameters. Check their docs or an actual booking flow instead of guessing names.
+
+## Reuse, without overbuilding
+
+Once the widget stands on its own, other properties could pass different destination URLs or styling, and the same bundle could go on other platforms. But I don't need a widget SDK for one booking form. A small, documented config is enough, and I'll extend it when a real second use shows up.
+
+## What changed for me
+
+The useful part wasn't the bundling or the Cloudflare setup. It was getting clear on the problem. "Integrate a booking engine" sounded backend-heavy. Once I defined the interaction, it was a React sidebar, a few controlled inputs, and a URL handoff. No database, credentials, or custom booking backend.
+
+Before deciding how to connect two systems, work out how much they really need to talk to each other. It's often less than you assume.

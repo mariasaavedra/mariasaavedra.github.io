@@ -1,12 +1,15 @@
 ---
-title: Home
+title: Engineering Field Notes
 layout: base.11ty.js
-name: Maria
 ---
-export function Greeting(props) {
-  return <p>Hello, {props.name}!</p>
-}
+# Engineering Field Notes
 
-# Welcome
+Problems encountered, decisions made, and things learned while building software.
 
-<Greeting name={props.name} />
+{props.collections.posts.map((post) => (
+  <p key={post.url}>
+    <a href={post.url}>{post.data.title}</a>
+    <br />
+    <em>{post.data.subtitle}</em>
+  </p>
+))}
